@@ -43,7 +43,7 @@
 │  │  │    ┌────────────────────────┐       ↓               │   │ │
 │  │  │    │scores = softmax(scores)│       ↓               │   │ │
 │  │  │    └────────────────────────┘       ↓               │   │ │
-│  │  │                   ↓                 ↓               │   │ │                                              
+│  │  │                   ↓                 ↓               │   │ │
 │  │  │            ┌──────────────────────────────┐         │   │ │
 │  │  │            │    output = torch.matmul     │         │   │ │
 │  │  │            └──────────────────────────────┘         │   │ │
@@ -94,3 +94,75 @@
                                 ↓
                               输出
                       (仅最后一个token的logits)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+flowchart TD
+    subgraph LLaMA Transformer Model
+        Input[输入] --> TE[Token Embedding Layer]
+        TE --> RPE[Rotary Position Encoding]
+        
+        %% 堆叠n层Transformer Block
+        RPE --> TB_1[Transformer Block 1]
+        TB_1 --> TB_2[Transformer Block 2]
+        TB_2 --> TB_n[Transformer Block n]
+        style TB_n fill:#f9f,stroke:#333,stroke-width:2px
+        
+        %% 最终处理流程
+        TB_n --> FRMS[Final RMSNorm]
+        FRMS --> OP[Output Projection]
+        OP --> Output[输出\n(仅最后一个token的logits)]
+
+        %% 单个Transformer Block内部结构
+        subgraph Transformer Block
+            RC1[Residual Connection 1] --> RMSA[RMSNorm (Attention)]
+            RMSA --> MHA[Multi-Head Attention]
+            
+            %% Multi-Head Attention内部
+            subgraph Multi-Head Attention
+                WQ[Wq (ColumnPar)] --> RE1[Apply Rotary Embed]
+                WK[Wk (ColumnPar)] --> RE1
+                WV[Wv (ColumnPar)] --> RE2[无旋转编码]
+                RE1 --> MM1[scores = torch.matmul]
+                MM1 --> MASK[mask]
+                MASK --> SM[scores = softmax(scores)]
+                SM --> MM2[output = torch.matmul]
+                MM2 --> WO[Wo (RowPar)]
+            end
+            
+            MHA --> RC2[Residual Connection 2]
+            RC2 --> RMSF[RMSNorm (FFN)]
+            RMSF --> FFN[FeedForward (SwiGLU)]
+            
+            %% FeedForward (SwiGLU)内部
+            subgraph FeedForward (SwiGLU)
+                W1[W1 (ColumnPar)] --> SiLU[SiLU]
+                W3[W3 (ColumnPar)] --> LIN[Linear]
+                SiLU --> EWM[Element-wise Multiply]
+                LIN --> EWM
+                EWM --> W2[W2 (RowPar)]
+            end
+            
+            FFN --> TBO[Block Output]
+        end
+    end
