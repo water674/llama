@@ -1,3 +1,4 @@
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        LLaMA Transformer Model                  │
 └─────────────────────────────────────────────────────────────────┘
@@ -94,67 +95,6 @@
                                 ↓
                               输出
                       (仅最后一个token的logits)
-
-
-
-
-
-
-flowchart TD
-    A[输入] --> B[Token Embedding]
-    B --> C[RoPE位置编码]
-    C --> D[Transformer Blocks × n_layers]
-    
-    subgraph D[循环n_layers次]
-        E[Block输入] --> F[残差连接1]
-        F --> G[RMSNorm Attn]
-        G --> H[多头注意力]
-        
-        subgraph H[多头注意力]
-            H1[Wq投影] --> H4[RoPE应用]
-            H2[Wk投影] --> H4
-            H3[Wv投影] --> H7[V保留]
-            H4 --> H5[注意力得分]
-            H5 --> H6[Softmax]
-            H6 --> H8[注意力输出]
-            H7 --> H8
-            H8 --> H9[Wo投影]
-        end
-        
-        H9 --> I[残差连接2]
-        I --> J[RMSNorm FFN]
-        J --> K[SwiGLU前馈]
-        
-        subgraph K[SwiGLU前馈]
-            K1[W1投影] --> K4[SiLU激活]
-            K2[W3投影] --> K5[线性变换]
-            K4 --> K6[逐元素相乘]
-            K5 --> K6
-            K6 --> K7[W2投影]
-        end
-        
-        K7 --> L[Block输出]
-    end
-    
-    L --> M[最终RMSNorm]
-    M --> N[输出投影]
-    N --> O[输出logits]
-
-    classDef main fill:#e8f4fd,stroke:#2c86c7
-    classDef sub fill:#f0f8f0,stroke:#3a9d23
-    class A,B,C,D,M,N,O main
-    class H,K sub
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
