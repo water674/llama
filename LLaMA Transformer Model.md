@@ -8,9 +8,9 @@
 │                    Token Embedding Layer                        │
 └─────────────────────────────────────────────────────────────────┘
                                 ↓
-┌─────────────────────────────────────────────────────────────────┐  def precompute_freqs_cis(dim: int, end: int, theta: float = 10000.0): ... return freqs_cis
-│                 Rotary Position Encoding(RoPE)                  │  
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐  def precompute_freqs_cis(dim: int, end: int, theta: float = 10000.0): 
+│                 Rotary Position Encoding(RoPE)                  │    ...
+└─────────────────────────────────────────────────────────────────┘    return freqs_cis
                                 ↓
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Transformer Blocks (× n_layers)              │
