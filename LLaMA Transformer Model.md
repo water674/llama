@@ -121,6 +121,7 @@ class RMSNorm(torch.nn.Module):
 
 
 ## RoPE
+
 <details> <summary><b>RoPE实现代码（点击展开）</b></summary>
   
 ```python
@@ -132,10 +133,11 @@ def precompute_freqs_cis(dim: int, end: int, theta: float = 10000.0):
     return freqs_cis
 ```
 
-<details>
-1
 
 
+
+<details> <summary><b>Attention实现代码（点击展开）</b></summary>
+  
 ## Transformer Block (* n_layers )
 
 ### Attention
