@@ -160,10 +160,9 @@ $$
 
 - 旋转操作：
 
-$$
-\begin{bmatrix} q_{m,2k-1} \\ q_{m,2k} \end{bmatrix}  = \begin{bmatrix} \cos(m\theta_k) & -\sin(m\theta_k) \\ \sin(m\theta_k) & \cos(m\theta_k) \end{bmatrix}
-\begin{bmatrix} q_{2k-1} \\ q_{2k} \end{bmatrix}
-$$
+```math
+\begin{bmatrix} q_{m,2k-1} \\ q_{m,2k} \end{bmatrix}  = \begin{bmatrix} \cos(m\theta_k) & -\sin(m\theta_k) \\ \sin(m\theta_k) & \cos(m\theta_k) \end{bmatrix} \begin{bmatrix} q_{2k-1} \\ q_{2k} \end{bmatrix}
+```
 
 
 这种旋转操作确保了注意力分数仅依赖于相对位置，满足 $e^{i(m-n)\theta} = e^{im\theta} \cdot e^{-in\theta}$ 的性质。
