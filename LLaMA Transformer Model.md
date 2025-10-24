@@ -664,7 +664,58 @@ class Transformer(nn.Module):
 
 > （注：文档部分内容可能由 AI 生成）
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## RMSNorm
+
+
+<details>
+  <summary>RMSNorm代码实现</summary>
 ```python
 class RMSNorm(torch.nn.Module):
     def __init__(self, dim: int, eps: float = 1e-6):
@@ -680,11 +731,15 @@ class RMSNorm(torch.nn.Module):
         return output * self.weight
 ```
 
+</details>
+
+
+
 
 ## RoPE
 
-<details> <summary><b>RoPE实现代码（点击展开）</b></summary>
-  
+
+
 ```python
 def precompute_freqs_cis(dim: int, end: int, theta: float = 10000.0):
     freqs = 1.0 / (theta ** (torch.arange(0, dim, 2)[: (dim // 2)].float() / dim))
@@ -697,7 +752,6 @@ def precompute_freqs_cis(dim: int, end: int, theta: float = 10000.0):
 
 
 
-<details> <summary><b>Attention实现代码（点击展开）</b></summary>
   
 ## Transformer Block (* n_layers )
 
@@ -877,11 +931,6 @@ class Transformer(nn.Module):
         output = self.output(h[:, -1, :])  # only compute last logits
         return output.float()
 ```
-
-
-
-
-
 
 
 
